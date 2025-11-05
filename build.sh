@@ -1,3 +1,5 @@
+start=$(date +%s.%N)
+
 mkdir -p build
 
 CCOMPILER=("zig" "cc")
@@ -135,7 +137,7 @@ done
 
 echo -e "\n]" >> "$OUT"
 
-echo -e "COMPILING: ${FILES_C[@]} ${FILES_CPP[@]}\n"
+echo "COMPILING: ${FILES_C[@]} ${FILES_CPP[@]}"
 
 OBJ_DIR="build/obj"
 OBJS=()
@@ -205,7 +207,17 @@ mapfile -t OBJS < "$OBJ_DIR/objs.tmp"
 rm -f objs.tmp
 
 if $BUILD_WINDOWS; then
-    "${COMPILER[@]}" "${OBJS[@]}" $FLAGS_LINK -o build/out.exe -static && ( [[ "$OSTYPE" == "linux-gnu" ]] && wine ./build/out.exe || ./build/out.exe )
+    "${COMPILER[@]}" "${OBJS[@]}" $FLAGS_LINK -o build/out.exe -static
 else
-    "${COMPILER[@]}" "$LINKER" "${OBJS[@]}" $FLAGS_LINK -fno-sanitize=undefined -o build/out.game && ./build/out.game
+    "${COMPILER[@]}" "$LINKER" "${OBJS[@]}" $FLAGS_LINK -fno-sanitize=undefined -o build/out.game
+fi
+
+end=$(date +%s.%N)
+elapsed=$(echo "$end - $start" | bc)
+printf "TOOK %.3f SECONDS\n\n" "$elapsed"
+
+if $BUILD_WINDOWS; then
+    ( [[ "$OSTYPE" == "linux-gnu" ]] && wine ./build/out.exe || ./build/out.exe )
+else
+    ./build/out.game
 fi
