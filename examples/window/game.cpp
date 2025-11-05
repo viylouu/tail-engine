@@ -7,7 +7,7 @@ public:
     void exit() override {}
 
     void update(f32 dt) override { 
-        std::cout << dt << "\n";
+        std::cout << 1.f/dt << " FPS\n";
     }
 };
 
