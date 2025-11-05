@@ -5,10 +5,10 @@
 namespace tail {
     class Program {
 public:
-        virtual ~Program() {}
-        virtual void init() = 0;
-        virtual void update(f32 dt) = 0;
-        virtual void exit() = 0;
+        virtual ~Program()          { }
+        virtual void init()         { }
+        virtual void update(f32 dt) { UNUSED(dt); }
+        virtual void exit()         { }
     };
 
     void run(Program* program);

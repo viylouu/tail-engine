@@ -1,14 +1,9 @@
 #include <tail.hpp>
-#include <iostream>
 
 class Game : public tail::Program {
 public:
-    void init() override {}
-    void exit() override {}
-
-    void update(f32 dt) override { 
-        (void)dt;
-        //std::cout << 1.f/dt << " FPS\n";
+    void update(f32 dt) { 
+        UNUSED(dt);
     }
 };
 
