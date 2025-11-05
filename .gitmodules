@@ -1,0 +1,3 @@
+[submodule "furry-framework"]
+	path = furry
+	url = https://github.com/viylouu/furry-framework.git
