@@ -109,7 +109,7 @@ OUT="compile_commands.json"
 echo "[" > "$OUT"
 
 FIRST=1
-for file in "${FILES_C[@]}" "${FILES_CC[@]}"; do 
+for file in "${FILES_C[@]}" "${FILES_CPP[@]}"; do 
     if [[ $file == *.c ]]; then
         COMP="gcc" # not really
         STD="-std=c99"
