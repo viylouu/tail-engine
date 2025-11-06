@@ -11,7 +11,10 @@ extern tail::Program* create_game();
 
 namespace tail {
     void run(Program* program, FUR_platfState* platf, FUR_renderState* render) {
-        if (program) program->init();
+        Settings sets = {};
+        sets.bgcolor = v3{0,0,0};
+
+        if (program) program->init(&sets);
 
         FUR_timer* time = IMPL_fur_makeTimer(OP_fur_makeTimer{
                 FUR_PLATF_GLFW,
@@ -25,7 +28,7 @@ namespace tail {
 
             IMPL_fur_render_clear(render, OP_fur_render_clear{
                     NULL, 
-                    v3{0,0,0}
+                    sets.bgcolor
                 });
 
             program->update(time->delta);
