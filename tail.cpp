@@ -26,10 +26,11 @@ namespace tail {
             fur_input_poll(platf);
             fur_updateTimers(&time, 1);
 
-            IMPL_fur_render_clear(render, OP_fur_render_clear{
-                    NULL, 
-                    sets.bgcolor
-                });
+            if (!IS_NAN(sets.bgcolor.x) && !IS_NAN(sets.bgcolor.y) && !IS_NAN(sets.bgcolor.z))
+                IMPL_fur_render_clear(render, OP_fur_render_clear{
+                        NULL, 
+                        sets.bgcolor
+                    });
 
             program->update(time->delta);
 
