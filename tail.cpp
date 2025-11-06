@@ -11,10 +11,15 @@ extern tail::Program* create_game();
 
 namespace tail {
     void run(Program* program, FUR_platfState* platf, FUR_renderState* render) {
+        ERROR_IF(!program, "tf you think will happen?\n");
+
         Settings sets = {};
         sets.bgcolor = v3{0,0,0};
 
-        if (program) program->init(&sets);
+        program->scene = new Node();
+
+        program->init(&sets);
+        program->scene->init();
 
         FUR_timer* time = IMPL_fur_makeTimer(OP_fur_makeTimer{
                 FUR_PLATF_GLFW,
@@ -32,7 +37,9 @@ namespace tail {
                         sets.bgcolor
                     });
 
-            program->update(time->delta);
+            program->preupdate(time->delta);
+            program->scene->update(time->delta);
+            program->postupdate(time->delta);
 
             fur_render_flush(render);
             fur_platf_present(platf);
@@ -40,7 +47,10 @@ namespace tail {
 
         fur_destroyTimer(time);
 
-        if (program) program->exit();
+        program->scene->exit();
+        program->exit();
+
+        delete program->scene;
     }
 }
 

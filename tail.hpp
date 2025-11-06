@@ -1,6 +1,7 @@
 #pragma once
 
 #include <core/macros.h>
+#include <node/node.hpp>
 
 namespace tail {
     struct Settings {
@@ -9,9 +10,12 @@ namespace tail {
 
     class Program {
 public:
+        Node* scene;
+
         virtual ~Program()               { }
         virtual void init(Settings* set) { UNUSED(set);  }
-        virtual void update(f32 dt)      { UNUSED(dt); }
+        virtual void preupdate(f32 dt)   { UNUSED(dt); }
+        virtual void postupdate(f32 dt)  { UNUSED(dt); }
         virtual void exit()              { }
     };
 

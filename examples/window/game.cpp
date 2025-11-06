@@ -4,10 +4,10 @@ class Game : public tail::Program {
 public:
     void init(tail::Settings* sets) {
         sets->bgcolor = v3{.2, .4, .3};
-    }
 
-    void update(f32 dt) { 
-        UNUSED(dt);
+        tail::Node* n = scene->add_child(nullptr);
+        UNUSED(n);
+        //n->add_component(new tail::Renderer2D());
     }
 };
 

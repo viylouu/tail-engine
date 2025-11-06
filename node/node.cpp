@@ -30,4 +30,15 @@ namespace tail {
         for (Node* child : children)
             child->exit();
     }
+
+    Node* Node::add_child(Node* child) {
+        if (!child) child = new Node();
+        children.push_back(child);
+        return child;
+    }
+    
+    Component* Node::add_component(Component* comp) {
+        components.push_back(comp);
+        return comp;
+    }
 }
