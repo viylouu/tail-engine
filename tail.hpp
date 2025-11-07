@@ -3,6 +3,8 @@
 #include <core/macros.h>
 #include <node/node.hpp>
 
+#include <components/renderer2d.hpp>
+
 namespace tail {
     struct Settings {
         v3 bgcolor;

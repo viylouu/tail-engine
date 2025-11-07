@@ -7,7 +7,7 @@ public:
 
         tail::Node* n = scene->add_child(nullptr);
         UNUSED(n);
-        //n->add_component(new tail::Renderer2D());
+        n->add_component(new tail::comp::Renderer2d());
     }
 };
 

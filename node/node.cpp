@@ -39,6 +39,7 @@ namespace tail {
     
     Component* Node::add_component(Component* comp) {
         components.push_back(comp);
+        comp->node = this;
         return comp;
     }
 }
