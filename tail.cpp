@@ -24,8 +24,8 @@ namespace tail {
         program->scene->init();
 
         FUR_timer* time = IMPL_fur_makeTimer(OP_fur_makeTimer{
-                FUR_PLATF_GLFW,
-                0
+                FUR_PLATF_GLFW, // plat
+                0               // off
             });
 
         while (!fur_platf_shouldWindowClose(platf)) {
@@ -35,8 +35,8 @@ namespace tail {
 
             if (!IS_NAN(sets.bgcolor.x) && !IS_NAN(sets.bgcolor.y) && !IS_NAN(sets.bgcolor.z))
                 IMPL_fur_render_clear(render, OP_fur_render_clear{
-                        NULL, 
-                        sets.bgcolor
+                        NULL,           // target
+                        sets.bgcolor    // col
                     });
 
             program->preupdate(time->delta);
@@ -62,13 +62,13 @@ using namespace tail;
     ERROR_IF(!program, "failed to create game!\n");
 
     state::platf = IMPL_fur_platf_constr(OP_fur_platf_constr{
-            (char*)"window",
-            v2{800,600},
-            FUR_PLATF_GLFW
+            (char*)"window",    // title
+            v2{800,600},        // dims
+            FUR_PLATF_GLFW      // platf
         });
 
     state::render = IMPL_fur_render_constr(OP_fur_render_constr{
-            FUR_RENDER_API_GL
+            FUR_RENDER_API_GL   // api
         });
 
     fur_platf_setRender(state::platf, state::render);

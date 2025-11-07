@@ -2,14 +2,16 @@
 
 #include <node/node.hpp>
 
+#include <variant>
+
 namespace tail {
     class Renderer2d : public Component {
 public:
-        enum class Type {
-            Rect
-        } type;
+        struct Rect {
+            v4 col;
+        };
 
-        v4 tint;
+        std::variant<Rect> typedata;
 
         void update(f32 dt);
     };

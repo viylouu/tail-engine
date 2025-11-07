@@ -4,7 +4,7 @@ mkdir -p build
 
 CCOMPILER=("zig" "cc")
 CFLAGS="-std=c99"
-CPP_FLAGS="-std=c++11"
+CPP_FLAGS="-std=c++17"
 COMPILER=("g++")
 CFLAGS_COMP="-pedantic -Wall -Wextra -Werror -Wno-initializer-overrides -Wno-override-init -Wno-cast-function-type"
 CPP_FLAGS_COMP="-pedantic -Wall -Wextra -Werror"
@@ -117,7 +117,7 @@ for file in "${FILES_C[@]}" "${FILES_CPP[@]}"; do
         STD="-std=c99"
     else
         COMP="g++"
-        STD="-std=c++11"
+        STD="-std=c++17"
     fi
 
     CMD="$COMP $STD -pedantic -Wall -Wextra -Werror -Wno-initializer-overrides -Ifurry -Ifurry/deps -Itail/furry -Itail/furry/deps -Ideps -I. -Itail/deps -Itail -c \\\"$file\\\""
