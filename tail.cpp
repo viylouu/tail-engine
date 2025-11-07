@@ -1,6 +1,8 @@
 #include "tail.hpp"
 #include <iostream>
 
+#include <nouser/state.hpp>
+
 #include <platf/agnostic.h>
 #include <render/agnostic.h>
 #include <render/draw.h>
@@ -55,25 +57,26 @@ namespace tail {
 }
 
 int main(void) {
-    tail::Program* program = create_game();
+using namespace tail;
+    Program* program = create_game();
     ERROR_IF(!program, "failed to create game!\n");
 
-    FUR_platfState* platf = IMPL_fur_platf_constr(OP_fur_platf_constr{
+    state::platf = IMPL_fur_platf_constr(OP_fur_platf_constr{
             (char*)"window",
             v2{800,600},
             FUR_PLATF_GLFW
         });
 
-    FUR_renderState* render = IMPL_fur_render_constr(OP_fur_render_constr{
+    state::render = IMPL_fur_render_constr(OP_fur_render_constr{
             FUR_RENDER_API_GL
         });
 
-    fur_platf_setRender(platf, render);
+    fur_platf_setRender(state::platf, state::render);
 
-    tail::run(program, platf, render);
+    run(program, state::platf, state::render);
 
-    fur_render_destr(render);
-    fur_platf_destr(platf);
+    fur_render_destr(state::render);
+    fur_platf_destr(state::platf);
 
     delete program;
     return 0;
