@@ -9,11 +9,11 @@ namespace tail {
 
         if (std::holds_alternative<Renderer2d::Rect>(typedata)) {
             IMPL_fur_render_rect(state::render, OP_fur_render_rect{
-                    NULL,                                       // target
-                    v2{node->pos.x,node->pos.y},                // pos
-                    v2{node->scale.x,node->scale.y},            // size
-                    std::get<Renderer2d::Rect>(typedata).col,   // col
-                    mat4_identity                               // transf
+                    .target = NULL,
+                    .pos    = v2{node->pos.x,node->pos.y},
+                    .size   = v2{node->scale.x,node->scale.y},
+                    .col    = std::get<Renderer2d::Rect>(typedata).col,
+                    .transf = mat4_identity
                 });
         }
     }

@@ -4,10 +4,10 @@ mkdir -p build
 
 CCOMPILER=("zig" "cc")
 CFLAGS="-std=c99"
-CPP_FLAGS="-std=c++17"
+CPP_FLAGS="-std=gnu++17"
 COMPILER=("g++")
 CFLAGS_COMP="-pedantic -Wall -Wextra -Werror -Wno-initializer-overrides -Wno-override-init -Wno-cast-function-type"
-CPP_FLAGS_COMP="-pedantic -Wall -Wextra -Werror"
+CPP_FLAGS_COMP="-Wall -Wextra -Werror"
 FLAGS_COMP="-Ifurry -Ifurry/deps -Itail/furry -Itail/furry/deps -Ideps -I. -Itail/deps -Itail -isystem"
 FLAGS_LINK=""
 
@@ -115,12 +115,14 @@ for file in "${FILES_C[@]}" "${FILES_CPP[@]}"; do
     if [[ $file == *.c ]]; then
         COMP="gcc" # not really
         STD="-std=c99"
+        PEDANTIC="-pedantic"
     else
         COMP="g++"
-        STD="-std=c++17"
+        STD="-std=gnu++17"
+        PEDANTIC=""
     fi
 
-    CMD="$COMP $STD -pedantic -Wall -Wextra -Werror -Wno-initializer-overrides -Ifurry -Ifurry/deps -Itail/furry -Itail/furry/deps -Ideps -I. -Itail/deps -Itail -c \\\"$file\\\""
+    CMD="$COMP $STD $PEDANTIC -Wall -Wextra -Werror -Wno-initializer-overrides -Ifurry -Ifurry/deps -Itail/furry -Itail/furry/deps -Ideps -I. -Itail/deps -Itail -c \\\"$file\\\""
 
     if [ $FIRST -eq 1 ]; then
         FIRST=0
