@@ -43,7 +43,7 @@ namespace tail {
             if (cam)
                 IMPL_fur_render_renderTarget(render, OP_fur_render_renderTarget{
                             .out_target = NULL,
-                            .in_target = cam->out,
+                            .in_target = cam->out->targ,
                             .pos = v2{NAN,NAN},
                             .size = v2{NAN,NAN},
                             .sample = v4{NAN},

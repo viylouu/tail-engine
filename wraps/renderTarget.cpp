@@ -5,19 +5,14 @@
 
 namespace tail {
     RenderTarget::RenderTarget(s32 width, s32 height) {
-        FUR_renderTarget* targ = IMPL_fur_renderTarget_constr(width, height, OP_fur_renderTarget_constr{ .api = FUR_RENDER_API_GL });
-        spec = targ->spec;
-        *CAST(FUR_renderTarget*, spec) = *this; // hacky
-        api = targ->api;
-        texture = targ->texture;
-        free(targ);
+        targ = IMPL_fur_renderTarget_constr(width, height, OP_fur_renderTarget_constr{ .api = FUR_RENDER_API_GL });
     }
 
     RenderTarget::~RenderTarget() {
-        fur_renderTarget_destr(this);
+        fur_renderTarget_destr(targ);
     }
 
     void RenderTarget::resize(s32 width, s32 height) {
-        fur_renderTarget_resize(this, width, height);
+        fur_renderTarget_resize(targ, width, height);
     }
 }

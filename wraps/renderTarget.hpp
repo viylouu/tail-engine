@@ -3,7 +3,9 @@
 #include <core/renderTarget.h>
 
 namespace tail {
-    struct RenderTarget : FUR_renderTarget {
+    struct RenderTarget {
+        FUR_renderTarget* targ;
+
         RenderTarget(s32 width, s32 height);
         ~RenderTarget();
 
