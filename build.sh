@@ -7,7 +7,7 @@ CFLAGS="-std=c99"
 CPP_FLAGS="-std=gnu++17"
 COMPILER=("g++")
 CFLAGS_COMP="-pedantic -Wall -Wextra -Werror -Wno-initializer-overrides -Wno-override-init -Wno-cast-function-type"
-CPP_FLAGS_COMP="-Wall -Wextra -Werror"
+CPP_FLAGS_COMP="-Wall -Wextra -Werror -fno-exceptions"
 FLAGS_COMP="-Ifurry -Ifurry/deps -Itail/furry -Itail/furry/deps -Ideps -I. -Itail/deps -Itail -isystem"
 FLAGS_LINK=""
 
@@ -140,6 +140,12 @@ done
 echo -e "\n]" >> "$OUT"
 
 echo "COMPILING: ${FILES_C[@]} ${FILES_CPP[@]}"
+
+if command -v ccache >/dev/null 2>&1; then
+    echo "ccache enabled!"
+    COMPILER=("ccache" "${COMPILER[@]}")
+    CCOMPILER=("ccache" "${CCOMPILER[@]}")
+fi
 
 OBJ_DIR="build/obj"
 OBJS=()
