@@ -40,15 +40,16 @@ namespace tail {
                     });
 
             Camera* cam = program->scene->find_master_cam();
-            IMPL_fur_render_renderTarget(render, OP_fur_render_renderTarget{
-                        .out_target = NULL,
-                        .in_target = cam->out,
-                        .pos = v2{NAN,NAN},
-                        .size = v2{NAN,NAN},
-                        .sample = v4{NAN},
-                        .col = v4{1},
-                        .transf = mat4_identity_ptr
-                    });
+            if (cam)
+                IMPL_fur_render_renderTarget(render, OP_fur_render_renderTarget{
+                            .out_target = NULL,
+                            .in_target = cam->out,
+                            .pos = v2{NAN,NAN},
+                            .size = v2{NAN,NAN},
+                            .sample = v4{NAN},
+                            .col = v4{1},
+                            .transf = mat4_identity_ptr
+                        });
 
             program->preupdate(time->delta);
             program->scene->update(time->delta);

@@ -2,6 +2,7 @@
 
 #include <nouser/state.hpp>
 #include <render/draw.h>
+#include <node/node.hpp>
 
 namespace tail {
     void Renderer2d::update(f32 dt) {
