@@ -21,7 +21,7 @@ public:
 
         std::variant<Rect, Tex> typedata;
 
-        std::vector<Camera*> outs;
+        std::vector<Camera*> cams;
 
         void update(f32 dt);
     };

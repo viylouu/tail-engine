@@ -7,7 +7,7 @@ namespace tail {
     void Renderer2d::update(f32 dt) {
         UNUSED(dt);
 
-        for (Camera* cam : outs) {
+        for (Camera* cam : cams) {
             FUR_renderTarget* camout = state::render->defTarget;
             if (cam)
                 camout = cam->out;
