@@ -61,6 +61,8 @@ using namespace tail;
     Program* program = create_game();
     ERROR_IF(!program, "failed to create game!\n");
 
+    mat4_init();
+
     state::platf = IMPL_fur_platf_constr(OP_fur_platf_constr{
             .title = (char*)"window",
             .dims  = v2{800,600},
@@ -77,6 +79,8 @@ using namespace tail;
 
     fur_render_destr(state::render);
     fur_platf_destr(state::platf);
+
+    mat4_deinit();
 
     delete program;
     return 0;

@@ -4,6 +4,7 @@
 #include <wraps/texture.hpp>
 
 #include <variant>
+#include <components/camera.hpp>
 
 namespace tail {
     class Renderer2d : public Component {
@@ -19,6 +20,8 @@ public:
         };
 
         std::variant<Rect, Tex> typedata;
+
+        std::vector<Camera*> outs;
 
         void update(f32 dt);
     };

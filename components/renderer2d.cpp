@@ -7,24 +7,32 @@ namespace tail {
     void Renderer2d::update(f32 dt) {
         UNUSED(dt);
 
-        if (std::holds_alternative<Renderer2d::Rect>(typedata)) {
-            IMPL_fur_render_rect(state::render, OP_fur_render_rect{
-                    .target = NULL,
-                    .pos    = v2{node->pos.x,   node->pos.y},
-                    .size   = v2{node->scale.x, node->scale.y},
-                    .col    = std::get<Renderer2d::Rect>(typedata).col,
-                    .transf = mat4_identity
-                });
-        } else if (std::holds_alternative<Renderer2d::Tex>(typedata)) {
-            IMPL_fur_render_tex(state::render, OP_fur_render_tex{
-                    .target  = NULL,
-                    .texture = std::get<Renderer2d::Tex>(typedata).tex,
-                    .pos     = v2{node->pos.x,   node->pos.y},
-                    .size    = v2{node->scale.x, node->scale.y},
-                    .sample  = std::get<Renderer2d::Tex>(typedata).sample,
-                    .col     = std::get<Renderer2d::Tex>(typedata).tint,
-                    .transf  = mat4_identity
-                });
+        for (Camera* cam : outs) {
+            FUR_renderTarget* camout = state::render->defTarget;
+            if (cam)
+                camout = cam->out;
+
+            if (std::holds_alternative<Renderer2d::Rect>(typedata)) {
+                IMPL_fur_render_rect(state::render, OP_fur_render_rect{
+                        .target = camout,
+                        .pos    = v2{node->pos.x,   node->pos.y},
+                        .size   = v2{node->scale.x, node->scale.y},
+                        .col    = std::get<Renderer2d::Rect>(typedata).col,
+                        .transf = mat4_identity_ptr,
+                        //.proj   = &cam->proj
+                    });
+            } else if (std::holds_alternative<Renderer2d::Tex>(typedata)) {
+                IMPL_fur_render_tex(state::render, OP_fur_render_tex{
+                        .target  = camout,
+                        .texture = std::get<Renderer2d::Tex>(typedata).tex,
+                        .pos     = v2{node->pos.x,   node->pos.y},
+                        .size    = v2{node->scale.x, node->scale.y},
+                        .sample  = std::get<Renderer2d::Tex>(typedata).sample,
+                        .col     = std::get<Renderer2d::Tex>(typedata).tint,
+                        .transf  = mat4_identity_ptr,
+                        //.proj    = &cam->proj
+                    });
+            }
         }
     }
 }

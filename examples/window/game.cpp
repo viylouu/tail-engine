@@ -11,6 +11,7 @@ public:
         r2d->typedata = tail::Renderer2d::Rect{ 
             .col = v4{1,0,0,1}
         };
+        r2d->outs.push_back(NULL);
 
         n->scale = v3{64,64,1};
     }
