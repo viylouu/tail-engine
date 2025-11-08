@@ -36,6 +36,21 @@ namespace tail {
         children.push_back(child);
         return child;
     }
+
+    Camera* Node::find_master_cam() {
+        for (Component* comp : components) {
+            if ( Camera* cam = dynamic_cast<Camera*>(comp) )
+                return cam;
+        }
+
+        for (Node* child : children) {
+            Camera* cam = child->find_master_cam();
+            if (cam)
+                return cam;
+        }
+
+        return NULL;
+    }
     
     Component* Node::add_component(Component* comp) {
         components.push_back(comp);

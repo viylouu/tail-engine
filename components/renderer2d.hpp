@@ -1,8 +1,8 @@
 #pragma once
 
-#include <node/node.hpp>
+#include <node/component.hpp>
 #include <wraps/texture.hpp>
-
+#include <vector>
 #include <variant>
 #include <components/camera.hpp>
 

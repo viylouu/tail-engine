@@ -1,6 +1,6 @@
 #pragma once
 
-#include <node/node.hpp>
+#include <node/component.hpp>
 #include <wraps/renderTarget.hpp>
 
 namespace tail {
@@ -8,6 +8,7 @@ namespace tail {
 public:
         //mat4 proj;
         RenderTarget* out;
+        b8 is_master;
 
         Camera(s32 width, s32 height);
         ~Camera();
