@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-
+#include <string>
 #include <components/camera.hpp>
 #include <node/component.hpp>
 #include <core/macros.h>
@@ -16,6 +16,9 @@ public:
         std::vector<Component*> components;
         std::vector<Node*> children;
 
+        std::string name;
+
+        Node();
         ~Node();
 
         void init();

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <core/macros.h>
+#include <string>
 
 namespace tail {
     class Node;
@@ -8,6 +9,8 @@ namespace tail {
     class Component {
 public:
         Node* node;
+
+        std::string name;
 
         virtual ~Component()        { }
         virtual void init()         { }

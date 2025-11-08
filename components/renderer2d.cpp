@@ -5,6 +5,8 @@
 #include <node/node.hpp>
 
 namespace tail {
+    void Renderer2d::init() { name = "Renderer2d"; }
+
     void Renderer2d::update(f32 dt) {
         UNUSED(dt);
 

@@ -3,6 +3,8 @@
 #include <core/macros.h>
 
 namespace tail {
+    Node::Node() { name = "Node"; }
+
     Node::~Node() {
         for (Component* comp : components)
             delete comp;

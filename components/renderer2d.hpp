@@ -23,6 +23,7 @@ public:
 
         std::vector<Camera*> cams;
 
+        void init();
         void update(f32 dt);
     };
 }

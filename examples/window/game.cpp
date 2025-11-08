@@ -6,6 +6,7 @@ public:
         sets->bgcolor = v3{.2, .4, .3};
 
         tail::Node* n = scene->add_child(nullptr);
+        n->name = "test node";
 
         tail::Renderer2d* r2d = (tail::Renderer2d*)n->add_component(new tail::Renderer2d());
         r2d->typedata = tail::Renderer2d::Rect{ 
