@@ -47,7 +47,7 @@ namespace tail {
                             .pos = v2{NAN,NAN},
                             .size = v2{NAN,NAN},
                             .sample = v4{NAN},
-                            .col = v4{1},
+                            .col = v4{1,1,1,1},
                             .transf = mat4_identity_ptr
                         });
 
