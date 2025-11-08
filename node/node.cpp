@@ -40,7 +40,8 @@ namespace tail {
     Camera* Node::find_master_cam() {
         for (Component* comp : components) {
             if ( Camera* cam = dynamic_cast<Camera*>(comp) )
-                return cam;
+                if (cam->is_master)
+                    return cam;
         }
 
         for (Node* child : children) {
