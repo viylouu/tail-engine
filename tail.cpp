@@ -48,7 +48,8 @@ namespace tail {
                             .size = v2{NAN,NAN},
                             .sample = v4{NAN},
                             .col = v4{1,1,1,1},
-                            .transf = mat4_identity_ptr
+                            .transf = mat4_identity_ptr,
+                            .proj = NULL
                         });
 
             program->preupdate(time->delta);

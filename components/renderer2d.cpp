@@ -22,7 +22,7 @@ namespace tail {
                         .size   = v2{node->scale.x, node->scale.y},
                         .col    = std::get<Renderer2d::Rect>(typedata).col,
                         .transf = mat4_identity_ptr,
-                        //.proj   = &cam->proj
+                        .proj   = cam->proj
                     });
             } else if (std::holds_alternative<Renderer2d::Tex>(typedata)) {
                 IMPL_fur_render_tex(state::render, OP_fur_render_tex{
@@ -33,7 +33,7 @@ namespace tail {
                         .sample  = std::get<Renderer2d::Tex>(typedata).sample,
                         .col     = std::get<Renderer2d::Tex>(typedata).tint,
                         .transf  = mat4_identity_ptr,
-                        //.proj    = &cam->proj
+                        .proj    = cam->proj
                     });
             }
         }
