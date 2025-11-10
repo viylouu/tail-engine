@@ -12,8 +12,12 @@ namespace tail {
 
         for (Camera* cam : cams) {
             FUR_renderTarget* camout = state::render->defTarget;
-            if (cam)
+            mat4* camproj = NULL;
+
+            if (cam) {
                 camout = cam->out->targ;
+                camproj = cam->proj;
+            }
 
             if (std::holds_alternative<Renderer2d::Rect>(typedata)) {
                 IMPL_fur_render_rect(state::render, OP_fur_render_rect{
@@ -22,7 +26,7 @@ namespace tail {
                         .size   = v2{node->scale.x, node->scale.y},
                         .col    = std::get<Renderer2d::Rect>(typedata).col,
                         .transf = mat4_identity_ptr,
-                        .proj   = cam->proj
+                        .proj   = camproj
                     });
             } else if (std::holds_alternative<Renderer2d::Tex>(typedata)) {
                 IMPL_fur_render_tex(state::render, OP_fur_render_tex{
@@ -33,7 +37,7 @@ namespace tail {
                         .sample  = std::get<Renderer2d::Tex>(typedata).sample,
                         .col     = std::get<Renderer2d::Tex>(typedata).tint,
                         .transf  = mat4_identity_ptr,
-                        .proj    = cam->proj
+                        .proj    = camproj
                     });
             }
         }
