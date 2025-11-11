@@ -23,11 +23,7 @@ namespace tail {
         UNUSED(dt);
 
         mat4 a;
-        mat4_set_identity(transf);
-        mat4_multiply(transf, *transf, *proj); // should probably be just a std::copy / memcpy
-
-        mat4_translate(&a, node->pos.x, node->pos.y, node->pos.z);
-        mat4_multiply(transf, *transf, a);
+        mat4_translate(transf, -node->pos.x, -node->pos.y, -node->pos.z);
 
         mat4_rotateX(&a, node->rot.x);
         mat4_multiply(transf, *transf, a);
@@ -40,5 +36,7 @@ namespace tail {
 
         mat4_scale(&a, node->scale.x, node->scale.y, node->scale.z);
         mat4_multiply(transf, *transf, a);
+
+        mat4_multiply(transf, *transf, *proj);
     }
 }
