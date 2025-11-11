@@ -44,9 +44,9 @@ namespace tail {
                 IMPL_fur_render_renderTarget(render, OP_fur_render_renderTarget{
                             .out_target = NULL,
                             .in_target = cam->out->targ,
-                            .pos = v2{NAN,NAN},
-                            .size = v2{NAN,NAN},
-                            .sample = v4{NAN},
+                            .pos = v2{0,0},
+                            .size = v2{(f32)render->width,(f32)render->height},
+                            .sample = v4{0,0,(f32)render->width,(f32)render->height},
                             .col = v4{1,1,1,1},
                             .transf = mat4_identity_ptr,
                             .proj = NULL
