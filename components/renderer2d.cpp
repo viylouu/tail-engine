@@ -16,7 +16,7 @@ namespace tail {
 
             if (cam) {
                 camout = cam->out->targ;
-                camproj = cam->proj;
+                camproj = cam->transf;
             }
 
             if (std::holds_alternative<Renderer2d::Rect>(typedata)) {

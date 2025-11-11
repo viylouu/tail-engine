@@ -1,6 +1,7 @@
 #include "node.hpp"
 
 #include <core/macros.h>
+#include <components/camera.hpp>
 
 namespace tail {
     Node::Node() { name = "Node"; }

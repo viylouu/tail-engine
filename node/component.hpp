@@ -2,6 +2,7 @@
 
 #include <core/macros.h>
 #include <string>
+#include <node/node.hpp>
 
 namespace tail {
     class Node;

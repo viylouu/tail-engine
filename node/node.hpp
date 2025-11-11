@@ -2,12 +2,14 @@
 
 #include <vector>
 #include <string>
-#include <components/camera.hpp>
 #include <node/component.hpp>
 #include <core/macros.h>
 #include <core/matrix.h>
 
 namespace tail {
+    class Camera;
+    class Component;
+
     class Node {
 public:
         v3 pos, rot, scale;
