@@ -4,7 +4,7 @@
 #include <components/camera.hpp>
 
 namespace tail {
-    Node::Node() { name = "Node"; }
+    Node::Node() { name = "Node"; scale = v3{1,1,1}; }
 
     Node::~Node() {
         for (Component* comp : components)
