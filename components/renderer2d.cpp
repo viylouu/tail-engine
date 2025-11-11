@@ -10,6 +10,10 @@ namespace tail {
     void Renderer2d::update(f32 dt) {
         UNUSED(dt);
 
+        v2 pos{node->pos.x,   node->pos.y};
+        v2 size{node->scale.x, node->scale.y};
+        pos -= size / 2.f;
+
         for (Camera* cam : cams) {
             FUR_renderTarget* camout = state::render->defTarget;
             mat4* camproj = NULL;
@@ -22,8 +26,8 @@ namespace tail {
             if (std::holds_alternative<Renderer2d::Rect>(typedata)) {
                 IMPL_fur_render_rect(state::render, OP_fur_render_rect{
                         .target = camout,
-                        .pos    = v2{node->pos.x,   node->pos.y},
-                        .size   = v2{node->scale.x, node->scale.y},
+                        .pos    = pos,
+                        .size   = size,
                         .col    = std::get<Renderer2d::Rect>(typedata).col,
                         .transf = mat4_identity_ptr,
                         .proj   = camproj
@@ -32,8 +36,8 @@ namespace tail {
                 IMPL_fur_render_tex(state::render, OP_fur_render_tex{
                         .target  = camout,
                         .texture = std::get<Renderer2d::Tex>(typedata).tex->tex,
-                        .pos     = v2{node->pos.x,   node->pos.y},
-                        .size    = v2{node->scale.x, node->scale.y},
+                        .pos     = pos,
+                        .size    = size,
                         .sample  = std::get<Renderer2d::Tex>(typedata).sample,
                         .col     = std::get<Renderer2d::Tex>(typedata).tint,
                         .transf  = mat4_identity_ptr,

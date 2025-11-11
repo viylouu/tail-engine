@@ -14,6 +14,7 @@ public:
         };
         r2d->cams.push_back(NULL);
 
+        n->pos = v3{128,128,0};
         n->scale = v3{64,64,1};
     }
 };
