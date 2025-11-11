@@ -22,9 +22,9 @@ namespace tail {
     void Camera::update(f32 dt) {
         UNUSED(dt);
 
-        mat4 a;
         mat4_translate(transf, -node->pos.x, -node->pos.y, -node->pos.z);
 
+        mat4 a;
         mat4_rotateX(&a, node->rot.x);
         mat4_multiply(transf, *transf, a);
 
@@ -35,6 +35,9 @@ namespace tail {
         mat4_multiply(transf, *transf, a);
 
         mat4_scale(&a, node->scale.x, node->scale.y, node->scale.z);
+        mat4_multiply(transf, *transf, a);
+
+        mat4_translate(&a, out->targ->texture->width/2.f, out->targ->texture->height/2.f, 0);
         mat4_multiply(transf, *transf, a);
 
         mat4_multiply(transf, *transf, *proj);
