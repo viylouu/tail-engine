@@ -46,7 +46,7 @@ namespace tail {
                             .in_target = cam->out->targ,
                             .pos = v2{0,0},
                             .size = v2{(f32)render->width,(f32)render->height},
-                            .sample = v4{0,0,(f32)render->width,(f32)render->height},
+                            .sample = v4{0,0,(f32)cam->out->targ->texture->width,(f32)cam->out->targ->texture->height},
                             .col = v4{1,1,1,1},
                             .transf = mat4_identity_ptr,
                             .proj = NULL
