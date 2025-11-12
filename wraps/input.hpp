@@ -1,5 +1,7 @@
 #pragma once
 
+#include <core/macros.h>
+
 namespace tail {
     enum class Key {
 // misc
@@ -48,7 +50,21 @@ namespace tail {
         LAST
     };
 
+    enum class Mouse {
+        LEFT,
+        RIGHT,
+        MIDDLE,
+
+        LAST
+    };
+
     bool get_key(Key key);
     bool get_key_down(Key key);
     bool get_key_up(Key key);
+
+    bool get_mouse(Mouse but);
+    bool get_mouse_down(Mouse but);
+    bool get_mouse_up(Mouse but);
+
+    v2 get_mouse_pos();
 }

@@ -9,6 +9,7 @@ namespace tail {
 public:
         mat4* transf;
         mat4* proj;
+        mat4* transf_proj;
         RenderTarget* out;
         b8 is_master;
 
@@ -18,6 +19,8 @@ public:
         void update(f32 dt);
 
         Camera* add_to(Node* parent);
+
+        v3 mouse_to_this(v2 mouse);
     };   
 }
 
