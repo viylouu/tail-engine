@@ -61,4 +61,8 @@ namespace tail {
         comp->node = this;
         return comp;
     }
+
+    Node* Node::add_to(Node* parent) {
+        return parent->add_child(this);
+    }
 }

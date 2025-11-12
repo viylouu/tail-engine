@@ -42,4 +42,8 @@ namespace tail {
 
         mat4_multiply(transf, *transf, *proj);
     }
+
+    Camera* Camera::add_to(Node* parent) {
+        return (Camera*)parent->add_component((Component*)this);
+    }
 }

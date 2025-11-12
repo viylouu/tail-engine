@@ -16,6 +16,8 @@ public:
         ~Camera();
 
         void update(f32 dt);
+
+        Camera* add_to(Node* parent);
     };   
 }
 

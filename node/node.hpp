@@ -31,5 +31,6 @@ public:
 
         Node* add_child(Node* child);
         Component* add_component(Component* comp);
+        Node* add_to(Node* parent);
     };
 }

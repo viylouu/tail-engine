@@ -46,4 +46,8 @@ namespace tail {
             }
         }
     }
+
+    Renderer2d* Renderer2d::add_to(Node* parent) {
+        return (Renderer2d*)parent->add_component((Component*)this);
+    }
 }

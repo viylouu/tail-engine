@@ -25,5 +25,7 @@ public:
 
         void init();
         void update(f32 dt);
+
+        Renderer2d* add_to(Node* parent);
     };
 }
