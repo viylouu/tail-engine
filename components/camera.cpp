@@ -52,6 +52,7 @@ namespace tail {
 
     v3 Camera::mouse_to_this(v2 mouse) {
         v2 scaled = mouse / v2{(f32)state::render->width, (f32)state::render->height} * v2{(f32)out->targ->texture->width, (f32)out->targ->texture->height};
+        scaled -= v2{(f32)out->targ->texture->width, (f32)out->targ->texture->height} / 2.f;
         v4 transfd;
         mat4_multiply_vector(&transfd, *transf, v4{scaled.x,scaled.y,0,1});
         return v3{transfd.x,transfd.y,transfd.z};
