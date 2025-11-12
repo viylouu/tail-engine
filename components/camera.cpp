@@ -10,11 +10,13 @@ namespace tail {
         out = new RenderTarget(width, height);
         proj = (mat4*)NEW(mat4);
         transf = (mat4*)NEW(mat4);
+        transf_proj = (mat4*)NEW(mat4);
         mat4_ortho(proj, 0, out->targ->texture->width, 0, out->targ->texture->height, -1,1);
         name = "Camera";
     }
 
     Camera::~Camera() {
+        free(transf_proj);
         free(transf);
         free(proj);
         delete out;
@@ -49,7 +51,7 @@ namespace tail {
     }
 
     v3 Camera::mouse_to_this(v2 mouse) {
-        v2 scaled = mouse / v2{(f32)state::render->width, (f32)state::render->height};
+        v2 scaled = mouse / v2{(f32)state::render->width, (f32)state::render->height} * v2{(f32)out->targ->texture->width, (f32)out->targ->texture->height};
         v4 transfd;
         mat4_multiply_vector(&transfd, *transf, v4{scaled.x,scaled.y,0,1});
         return v3{transfd.x,transfd.y,transfd.z};
