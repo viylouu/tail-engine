@@ -4,13 +4,15 @@
 #include <components/camera.hpp>
 
 namespace tail {
-    Node::Node() { name = "Node"; scale = v3{1,1,1}; }
+    Node::Node() { name = "Node"; scale = v3{1,1,1}; transf = (mat4*)NEW(mat4); }
 
     Node::~Node() {
         for (Component* comp : components)
             delete comp;
         for (Node* child : children)
             delete child;
+
+        free(transf);
     }
 
     void Node::init() {
@@ -21,6 +23,21 @@ namespace tail {
     }
 
     void Node::update(f32 dt) {
+        mat4_translate(transf, pos.x, pos.y, pos.z);
+
+        mat4 a;
+        mat4_rotateX(&a, rot.x);
+        mat4_multiply(transf, a, *transf);
+
+        mat4_rotateY(&a, rot.y);
+        mat4_multiply(transf, a, *transf);
+
+        mat4_rotateZ(&a, rot.z);
+        mat4_multiply(transf, a, *transf);
+
+        mat4_scale(&a, scale.x, scale.y, scale.z);
+        mat4_multiply(transf, a, *transf);
+
         for (Component* comp : components)
             comp->update(dt);
         for (Node* child : children)

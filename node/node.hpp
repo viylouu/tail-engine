@@ -13,7 +13,7 @@ namespace tail {
     class Node {
 public:
         v3 pos, rot, scale;
-        mat4 transf;
+        mat4* transf;
 
         std::vector<Component*> components;
         std::vector<Node*> children;
