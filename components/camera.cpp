@@ -4,6 +4,7 @@
 #include <core/macros.h>
 #include <stdlib.h>
 #include <nouser/state.hpp>
+#include <wraps/input.hpp>
 
 namespace tail {
     Camera::Camera(s32 width, s32 height) {
@@ -50,11 +51,15 @@ namespace tail {
         return (Camera*)parent->add_component((Component*)this);
     }
 
-    v3 Camera::mouse_to_this(v2 mouse) {
+    v3 Camera::screen_to_this(v2 mouse) {
         v2 scaled = mouse / v2{(f32)state::render->width, (f32)state::render->height} * v2{(f32)out->targ->texture->width, (f32)out->targ->texture->height};
         scaled -= v2{(f32)out->targ->texture->width, (f32)out->targ->texture->height} / 2.f;
         v4 transfd;
         mat4_multiply_vector(&transfd, *transf, v4{scaled.x,scaled.y,0,1});
         return v3{transfd.x,transfd.y,transfd.z};
+    }
+
+    v3 Camera::mouse_to_this() {
+        return screen_to_this(get_mouse_pos());
     }
 }

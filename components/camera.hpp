@@ -21,7 +21,8 @@ public:
 
         Camera* add_to(Node* parent);
 
-        v3 mouse_to_this(v2 mouse);
+        v3 screen_to_this(v2 mouse);
+        v3 mouse_to_this();
     };   
 }
 
