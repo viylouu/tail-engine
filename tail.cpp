@@ -12,6 +12,20 @@
 extern tail::Program* create_game();
 
 namespace tail {
+    void clear_cams(Node* node) {
+        for (Component* comp : node->components) {
+            if ( Camera* cam = dynamic_cast<Camera*>(comp) )
+                if (!IS_NAN(cam->bgcolor.x) && !IS_NAN(cam->bgcolor.y) && !IS_NAN(cam->bgcolor.z))
+                    IMPL_fur_render_clear(state::render, OP_fur_render_clear{
+                            .target = cam->out->targ,
+                            .col    = v3{cam->bgcolor.x, cam->bgcolor.y, cam->bgcolor.z}
+                        });
+        }
+
+        for (Node* child : node->children)
+            clear_cams(child);
+    }
+
     void run(Program* program, FUR_platfState* platf, FUR_renderState* render) {
         ERROR_IF(!program, "tf you think will happen?\n");
 
@@ -51,6 +65,8 @@ namespace tail {
                             .transf = mat4_identity_ptr,
                             .proj = NULL
                         });
+
+            clear_cams(program->scene);
 
             program->preupdate(time->delta);
             program->scene->update(time->delta);
