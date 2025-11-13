@@ -12,7 +12,7 @@ public:
         mat4* transf_proj;
         RenderTarget* out;
         b8 is_master;
-        v4 bgcolor;
+        v3 bgcolor;
 
         Camera(s32 width, s32 height);
         ~Camera();

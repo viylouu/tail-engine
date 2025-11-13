@@ -18,7 +18,7 @@ namespace tail {
                 if (!IS_NAN(cam->bgcolor.x) && !IS_NAN(cam->bgcolor.y) && !IS_NAN(cam->bgcolor.z))
                     IMPL_fur_render_clear(state::render, OP_fur_render_clear{
                             .target = cam->out->targ,
-                            .col    = v3{cam->bgcolor.x, cam->bgcolor.y, cam->bgcolor.z}
+                            .col    = cam->bgcolor
                         });
         }
 
