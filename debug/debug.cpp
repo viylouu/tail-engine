@@ -48,7 +48,7 @@ namespace tail {
             state::is_debug = !state::is_debug;
 
         if (state::is_debug) {
-            ImGui::Begin("debug");
+            ImGui::Begin("debug - hierarchy");
 
             gui_hier(scene, 0);
 
