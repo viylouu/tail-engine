@@ -31,8 +31,8 @@ namespace tail {
         ImGui::NewFrame();
     }
 
-    void gui_hier(Node* node) {
-        ImGui::PushID(node->name.c_str());
+    void gui_hier(Node* node, s32* id) {
+        ImGui::PushID(*id);
 
         if (node->children.size() != 0) {
             if (ImGui::Button(node->DEBUG_expanded? "-" : "+"))
@@ -47,7 +47,7 @@ namespace tail {
 
         if (node->DEBUG_expanded)
             for (Node* child : node->children)
-                gui_hier(child);
+                gui_hier(child, &++*id); // silly
 
         ImGui::Unindent(24);    
         ImGui::PopID();    
@@ -60,7 +60,8 @@ namespace tail {
         if (state::is_debug) {
             ImGui::Begin("debug - hierarchy");
 
-            gui_hier(scene);
+            s32 temp = 0;
+            gui_hier(scene, &temp);
 
             ImGui::End();
         }
