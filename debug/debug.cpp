@@ -32,6 +32,8 @@ namespace tail {
     }
 
     void gui_hier(Node* node) {
+        ImGui::PushID(node->name.c_str());
+
         if (node->children.size() != 0) {
             if (ImGui::Button(node->DEBUG_expanded? "-" : "+"))
                 node->DEBUG_expanded = !node->DEBUG_expanded;
@@ -48,6 +50,7 @@ namespace tail {
                 gui_hier(child);
 
         ImGui::Unindent(24);    
+        ImGui::PopID();    
     }
 
     void debug_endFrame(Node* scene) {
