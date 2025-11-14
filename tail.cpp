@@ -34,6 +34,7 @@ namespace tail {
         sets.bgcolor = v3{0,0,0};
 
         program->scene = new Node();
+        program->scene->name = "scene";
 
         program->init(&sets);
         program->scene->init();
@@ -77,7 +78,7 @@ namespace tail {
             
             fur_render_flush(render);
 
-            debug_endFrame();
+            debug_endFrame(program->scene);
 
             fur_platf_present(platf);
         }

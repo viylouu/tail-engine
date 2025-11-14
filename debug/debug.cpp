@@ -3,6 +3,9 @@
 #include <platf/glfw/main.h>
 
 #include <nouser/state.hpp>
+#include <wraps/input.hpp>
+
+#include <node/node.hpp>
 
 #include <deps/imgui/imgui.h>
 #include <deps/imgui/backends/imgui_impl_glfw.h>
@@ -28,11 +31,29 @@ namespace tail {
         ImGui::NewFrame();
     }
 
-    void debug_endFrame() {
-        ImGui::Begin("debug");
+    void gui_hier(Node* node, s32 indent) {
+        char buf[256];
+        snprintf(buf, sizeof(buf), "%*s%s %s", indent, "", (node->DEBUG_expanded? "\\" : "-"), node->name.c_str());
 
-        ImGui::End();
+        if (ImGui::Selectable(buf))
+            node->DEBUG_expanded = !node->DEBUG_expanded;
 
+        if (node->DEBUG_expanded)
+            for (Node* child : node->children)
+                gui_hier(child, indent+1);
+    }
+
+    void debug_endFrame(Node* scene) {
+        if (get_key_down(Key::F1))
+            state::is_debug = !state::is_debug;
+
+        if (state::is_debug) {
+            ImGui::Begin("debug");
+
+            gui_hier(scene, 0);
+
+            ImGui::End();
+        }
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

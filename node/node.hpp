@@ -15,6 +15,8 @@ public:
         v3 pos, rot, scale;
         mat4* transf;
 
+        bool DEBUG_expanded = false;
+
         std::vector<Component*> components;
         std::vector<Node*> children;
 
