@@ -8,6 +8,7 @@
 #include <render/draw.h>
 #include <core/input.h>
 #include <core/time.h>
+#include <debug/debug.hpp>
 
 extern tail::Program* create_game();
 
@@ -47,6 +48,8 @@ namespace tail {
             fur_input_poll(platf);
             fur_updateTimers(&time, 1);
 
+            debug_startFrame();
+
             if (!IS_NAN(sets.bgcolor.x) && !IS_NAN(sets.bgcolor.y) && !IS_NAN(sets.bgcolor.z))
                 IMPL_fur_render_clear(render, OP_fur_render_clear{
                         .target = NULL,
@@ -73,6 +76,9 @@ namespace tail {
             program->postupdate(time->delta);
             
             fur_render_flush(render);
+
+            debug_endFrame();
+
             fur_platf_present(platf);
         }
 
@@ -104,7 +110,11 @@ using namespace tail;
 
     fur_platf_setRender(state::platf, state::render);
 
+    debug_init();
+
     run(program, state::platf, state::render);
+
+    debug_end();
 
     fur_render_destr(state::render);
     fur_platf_destr(state::platf);
