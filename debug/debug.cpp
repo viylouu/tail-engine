@@ -31,16 +31,23 @@ namespace tail {
         ImGui::NewFrame();
     }
 
-    void gui_hier(Node* node, s32 indent) {
-        char buf[256];
-        snprintf(buf, sizeof(buf), "%*s%s %s", indent, "", node->children.size() == 0? "*" : (node->DEBUG_expanded? "\\" : "-"), node->name.c_str());
+    void gui_hier(Node* node) {
+        if (node->children.size() != 0) {
+            if (ImGui::Button(node->DEBUG_expanded? "-" : "+"))
+                node->DEBUG_expanded = !node->DEBUG_expanded;
+            ImGui::SameLine();
+        }
 
-        if (ImGui::Selectable(buf))
+        if (ImGui::Selectable(node->name.c_str()))
             node->DEBUG_expanded = !node->DEBUG_expanded;
+
+        ImGui::Indent(24);
 
         if (node->DEBUG_expanded)
             for (Node* child : node->children)
-                gui_hier(child, indent+1);
+                gui_hier(child);
+
+        ImGui::Unindent(24);    
     }
 
     void debug_endFrame(Node* scene) {
@@ -50,7 +57,7 @@ namespace tail {
         if (state::is_debug) {
             ImGui::Begin("debug - hierarchy");
 
-            gui_hier(scene, 0);
+            gui_hier(scene);
 
             ImGui::End();
         }
