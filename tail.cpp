@@ -57,6 +57,12 @@ namespace tail {
                         .col    = sets.bgcolor
                     });
 
+            clear_cams(program->scene);
+
+            program->preupdate(time->delta);
+            program->scene->update(time->delta);
+            program->postupdate(time->delta);
+            
             Camera* cam = program->scene->find_master_cam();
             if (cam)
                 IMPL_fur_render_renderTarget(render, OP_fur_render_renderTarget{
@@ -70,12 +76,6 @@ namespace tail {
                             .proj = NULL
                         });
 
-            clear_cams(program->scene);
-
-            program->preupdate(time->delta);
-            program->scene->update(time->delta);
-            program->postupdate(time->delta);
-            
             fur_render_flush(render);
 
             debug_endFrame(program->scene);
