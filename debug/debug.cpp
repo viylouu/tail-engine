@@ -33,7 +33,7 @@ namespace tail {
 
     void gui_hier(Node* node, s32 indent) {
         char buf[256];
-        snprintf(buf, sizeof(buf), "%*s%s %s", indent, "", (node->DEBUG_expanded? "\\" : "-"), node->name.c_str());
+        snprintf(buf, sizeof(buf), "%*s%s %s", indent, "", node->children.size() == 0? "*" : (node->DEBUG_expanded? "\\" : "-"), node->name.c_str());
 
         if (ImGui::Selectable(buf))
             node->DEBUG_expanded = !node->DEBUG_expanded;
