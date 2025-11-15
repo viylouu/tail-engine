@@ -43,8 +43,12 @@ namespace tail {
             ImGui::SameLine();
         }
 
-        if (ImGui::Selectable(node->name.c_str()))
-            DEBUG_sel = node;
+        if (ImGui::Selectable(node->name.c_str())) {
+            if (DEBUG_sel == node)
+                DEBUG_sel = NULL;
+            else
+                DEBUG_sel = node;
+        }
 
         ImGui::Indent(24);
 
