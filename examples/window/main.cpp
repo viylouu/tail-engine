@@ -1,24 +1,43 @@
-#include <tail.hpp>
+#include <platf/agnostic.h>
+#include <render/agnostic.h>
+#include <render/draw.h>
+#include <core/macros.h>
+#include <core/time.h>
+#include <core/input.h>
 
-class Game : public tail::Program {
-public:
-    void init(tail::Settings* sets) {
-        sets->bgcolor = v3{.2, .4, .3};
+int main() {
+    mat4_init();
 
-        tail::Node* n = scene->add_child(nullptr);
-        n->name = "test node";
+    FUR_platfState* platf = IMPL_fur_platf_constr(OP_fur_platf_constr{
+            .title = (char*)"untitled",
+            .dims = v2{800,600},
+            .platf = FUR_PLATF_GLFW
+        });
 
-        tail::Renderer2d* r2d = (tail::Renderer2d*)n->add_component(new tail::Renderer2d());
-        r2d->typedata = tail::Renderer2d::Rect{ 
-            .col = v4{1,0,0,1}
-        };
-        r2d->cams.push_back(NULL);
+    FUR_renderState* render = IMPL_fur_render_constr(OP_fur_render_constr{
+            .api = FUR_RENDER_API_GL
+        });
 
-        n->pos = v3{128,128,0};
-        n->scale = v3{64,64,1};
+    fur_platf_setRender(platf, render);
+
+    FUR_timer* time = IMPL_fur_makeTimer(OP_fur_makeTimer{ .plat = FUR_PLATF_GLFW, .off = 0 });
+
+    while (!fur_platf_shouldWindowClose(platf)) {
+        fur_platf_poll(platf);
+        fur_input_poll(platf);
+        fur_updateTimers(&time, 1);
+
+        fur_render_clear(render);
+        fur_render_rect(render);
+
+        fur_render_flush(render);
+        fur_platf_present(platf);
     }
-};
+    
+    fur_destroyTimer(time);
 
-tail::Program* create_game() {
-    return new Game();
+    fur_render_destr(render);
+    fur_platf_destr(platf);
+
+    mat4_deinit();
 }
