@@ -152,6 +152,47 @@ namespace tail {
                                 } case VarType::CUSTOM: {
                                     var.custom();
                                     break;
+                                } case VarType::VECTOR_2: {
+                                    v2* v = (v2*)var.var;
+                                    f32 arr[2] = {v->x,v->y};
+                                    ImGui::InputFloat2(var.name.c_str(), arr);
+                                    v->x = arr[0];
+                                    v->y = arr[1];
+                                    break;
+                                } case VarType::VECTOR_3: {
+                                    v3* v = (v3*)var.var;
+                                    f32 arr[3] = {v->x,v->y,v->z};
+                                    ImGui::InputFloat3(var.name.c_str(), arr);
+                                    v->x = arr[0];
+                                    v->y = arr[1];
+                                    v->z = arr[2];
+                                    break;
+                                } case VarType::VECTOR_4: {
+                                    v4* v = (v4*)var.var;
+                                    f32 arr[4] = {v->x,v->y,v->z,v->w};
+                                    ImGui::InputFloat4(var.name.c_str(), arr);
+                                    v->x = arr[0];
+                                    v->y = arr[1];
+                                    v->z = arr[2];
+                                    v->w = arr[3];
+                                    break;
+                                } case VarType::COLOR_3: {
+                                    v3* v = (v3*)var.var;
+                                    f32 arr[3] = {v->x,v->y,v->z};
+                                    ImGui::ColorPicker3(var.name.c_str(), arr);
+                                    v->x = arr[0];
+                                    v->y = arr[1];
+                                    v->z = arr[2];
+                                    break;
+                                } case VarType::COLOR_4: {
+                                    v4* v = (v4*)var.var;
+                                    f32 arr[4] = {v->x,v->y,v->z,v->w};
+                                    ImGui::ColorPicker4(var.name.c_str(), arr);
+                                    v->x = arr[0];
+                                    v->y = arr[1];
+                                    v->z = arr[2];
+                                    v->w = arr[3];
+                                    break;
                                 } default:
                                     printf("var type unsupported in editor!\n"); break;
                             }

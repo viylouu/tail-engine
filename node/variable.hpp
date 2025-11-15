@@ -12,7 +12,6 @@ namespace tail {
         VECTOR_2,
         VECTOR_3,
         VECTOR_4,
-        REFERENCE,
         COLOR_3,
         COLOR_4,
         BOOL,
