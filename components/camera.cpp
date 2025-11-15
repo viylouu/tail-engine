@@ -13,7 +13,15 @@ namespace tail {
         transf = (mat4*)NEW(mat4);
         transf_proj = (mat4*)NEW(mat4);
         mat4_ortho(proj, 0, out->targ->texture->width, 0, out->targ->texture->height, -1,1);
+
         name = "Camera";
+        vars.push_back(Variable{
+                &is_master,
+                sizeof(bool),
+                VarType::BOOL,
+                "is master?",
+                NULL
+            });
     }
 
     Camera::~Camera() {

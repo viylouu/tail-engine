@@ -8,10 +8,13 @@
 #include <node/node.hpp>
 
 #include <deps/imgui/imgui.h>
+#include <deps/imgui/misc/cpp/imgui_stdlib.h>
 #include <deps/imgui/backends/imgui_impl_glfw.h>
 #include <deps/imgui/backends/imgui_impl_opengl3.h>
 
 namespace tail {
+    Node* DEBUG_sel;
+
     void debug_init() {
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
@@ -41,7 +44,7 @@ namespace tail {
         }
 
         if (ImGui::Selectable(node->name.c_str()))
-            node->DEBUG_expanded = !node->DEBUG_expanded;
+            DEBUG_sel = node;
 
         ImGui::Indent(24);
 
@@ -64,6 +67,98 @@ namespace tail {
             gui_hier(scene, &temp);
 
             ImGui::End();
+
+            if (DEBUG_sel) {
+                ImGui::Begin("debug - properties"); 
+
+                ImGui::InputText("name", &DEBUG_sel->name);
+                
+                f32 vals1[3] = {DEBUG_sel->pos.x, DEBUG_sel->pos.y, DEBUG_sel->pos.z};
+                ImGui::InputFloat3("Position", vals1);
+                DEBUG_sel->pos.x = vals1[0];
+                DEBUG_sel->pos.y = vals1[1];
+                DEBUG_sel->pos.z = vals1[2];
+
+                f32 vals2[3] = {DEBUG_sel->rot.x, DEBUG_sel->rot.y, DEBUG_sel->rot.z};
+                ImGui::InputFloat3("Rotation", vals2);
+                DEBUG_sel->rot.x = vals2[0];
+                DEBUG_sel->rot.y = vals2[1];
+                DEBUG_sel->rot.z = vals2[2];
+
+                f32 vals3[3] = {DEBUG_sel->scale.x, DEBUG_sel->scale.y, DEBUG_sel->scale.z};
+                ImGui::InputFloat3("Scale", vals3);
+                DEBUG_sel->scale.x = vals3[0];
+                DEBUG_sel->scale.y = vals3[1];
+                DEBUG_sel->scale.z = vals3[2];
+
+                for (Component* comp : DEBUG_sel->components) {
+                    if (ImGui::Button(comp->DEBUG_expanded? "-" : "+"))
+                        comp->DEBUG_expanded = !comp->DEBUG_expanded;
+                    ImGui::SameLine();
+                    ImGui::Text("%s", comp->name.c_str());
+
+                    if (comp->DEBUG_expanded)
+                        for (Variable var : comp->vars)
+                            switch(var.type) {
+                                case VarType::INTEGER: {
+                                    ImGuiDataType type = -1;
+                                    switch (var.size) {
+                                        case sizeof(s8): type = ImGuiDataType_S8; break;
+                                        case sizeof(s16): type = ImGuiDataType_S16; break;
+                                        case sizeof(s32): type = ImGuiDataType_S32; break;
+                                        case sizeof(s64): type = ImGuiDataType_S64; break;
+                                        default:
+                                            printf("unsupported integer size %d!\n", (s32)var.size); break;
+                                    }
+                                    
+                                    if (type < 0) break;
+
+                                    ImGui::InputScalar(var.name.c_str(), type, var.var);
+                                    break;
+                                } case VarType::UNSIGNED_INTEGER: {
+                                    ImGuiDataType type = -1;
+                                    switch(var.size) {
+                                        case sizeof(u8): type = ImGuiDataType_U8; break;
+                                        case sizeof(u16): type = ImGuiDataType_U16; break;
+                                        case sizeof(u32): type = ImGuiDataType_U32; break;
+                                        case sizeof(u64): type = ImGuiDataType_U64; break;
+                                        default:
+                                            printf("unsupported unsigned integer size %d!\n", (s32)var.size); break;
+                                    }
+
+                                    if (type < 0) break;
+
+                                    ImGui::InputScalar(var.name.c_str(), type, var.var);
+                                    break;
+                                } case VarType::FLOAT: {
+                                    ImGuiDataType type = -1;
+                                    switch(var.size) {
+                                        case sizeof(f32): type = ImGuiDataType_Float; break;
+                                        case sizeof(f64): type = ImGuiDataType_Double; break;
+                                        default:
+                                            printf("unsupported float size %d!\n", (s32)var.size); break;
+                                    }
+
+                                    if (type < 0) break;
+
+                                    ImGui::InputScalar(var.name.c_str(), type, var.var);
+                                    break;
+                                } case VarType::STRING: {
+                                    ImGui::InputText(var.name.c_str(), (std::string*)var.var);
+                                    break;
+                                } case VarType::BOOL: {
+                                    ImGui::Checkbox(var.name.c_str(), (bool*)var.var);
+                                    break;
+                                } case VarType::CUSTOM: {
+                                    var.custom();
+                                    break;
+                                } default:
+                                    printf("var type unsupported in editor!\n"); break;
+                            }
+                }
+
+                ImGui::End();
+            }
         }
 
         ImGui::Render();
