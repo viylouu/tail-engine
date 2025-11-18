@@ -1,11 +1,12 @@
 #include "tail.hpp"
 
 #include <platf/agnostic.h>
-#include <render/agnostic.h>
-#include <render/draw.h>
+//#include <render/agnostic.h>
+//#include <render/draw.h>
 #include <core/macros.h>
 #include <core/time.h>
 #include <core/input.h>
+#include <wraps/render.hpp>
 
 int main() {
     mat4_init();
@@ -16,11 +17,9 @@ int main() {
             .platf = FUR_PLATF_GLFW
         });
 
-    FUR_renderState* Srender = IMPL_fur_render_constr(OP_fur_render_constr{
-            .api = FUR_RENDER_API_GL
-        });
+    tail::render_new();
 
-    fur_platf_setRender(Splatf, Srender);
+    fur_platf_setRender(Splatf, tail::render);
 
     FUR_timer* time = IMPL_fur_makeTimer(OP_fur_makeTimer{ .plat = FUR_PLATF_GLFW, .off = 0 });
 
@@ -37,7 +36,7 @@ int main() {
         update();
         render();
 
-        fur_render_flush(Srender);
+        tail::draw::flush();
         fur_platf_present(Splatf);
     }
     
@@ -45,7 +44,7 @@ int main() {
 
     fur_destroyTimer(time);
 
-    fur_render_destr(Srender);
+    tail::render_delete();
     fur_platf_destr(Splatf);
 
     mat4_deinit();
